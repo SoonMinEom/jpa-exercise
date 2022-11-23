@@ -12,6 +12,7 @@ public class BookResponse {
     private Long id;
     private String name;
     private String authorName;
+    private String publisherName;
 
     public BookResponse(Long id, String name) {
         this.id = id;
@@ -23,6 +24,7 @@ public class BookResponse {
               .id(book.getId())
               .name(book.getName())
               .authorName(book.getAuthor().getName())
+              .publisherName(book.getPublisher().getName())
               .build();
     }
 }
