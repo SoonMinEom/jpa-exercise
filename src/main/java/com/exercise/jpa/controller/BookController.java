@@ -23,7 +23,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("")
     public ResponseEntity<List<BookResponse>> getBooks(Pageable pageable) {
         return ResponseEntity.ok().body(bookService.findBooks(pageable));
     }
