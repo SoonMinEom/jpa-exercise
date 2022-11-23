@@ -18,11 +18,11 @@ public class BookResponse {
         this.name = name;
     }
 
-    public static BookResponse of(Book book, String name) {
+    public static BookResponse of(Book book) {
       return BookResponse.builder()
               .id(book.getId())
               .name(book.getName())
-              .authorName(name)
+              .authorName(book.getAuthor().getName())
               .build();
     }
 }
