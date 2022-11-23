@@ -1,13 +1,19 @@
 package com.exercise.jpa.service;
 
+import com.exercise.jpa.domain.dto.BookResponse;
 import com.exercise.jpa.domain.entity.Author;
 import com.exercise.jpa.domain.entity.Book;
 import com.exercise.jpa.repository.AuthorRepository;
 import com.exercise.jpa.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -19,12 +25,13 @@ public class BookService {
         this.authorRepository = authorRepository;
     }
 
-    public ResponseEntity<Book> get(Long id) {
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        Book book = optionalBook.get();
-        Optional<Author> optionalAuthor = authorRepository.findById((long) book.getAuthorId());
-        Author author = optionalAuthor.get();
-        book.setAuthorName(author.getName());
-        return ResponseEntity.ok().body(book);
+    public List<BookResponse> findBooks(Pageable pageable) {
+        Page<Book> books = bookRepository.findAll(pageable);
+        List<BookResponse> bookResponses = books.stream()
+                .map(book -> {
+                    Optional<Author> optionalAuthor = authorRepository.findById(book.getAuthorId());
+                    return BookResponse.of(book, optionalAuthor.get().getName());
+                }).collect(Collectors.toList());
+        return bookResponses;
     }
 }

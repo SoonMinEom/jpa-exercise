@@ -20,9 +20,7 @@ public class Book {
     private Long id;
     private String name;
 //    private int publisherId;
-    private int authorId;
-    @Transient
-    private String authorName;
+    private Long authorId;
 
 
 }
