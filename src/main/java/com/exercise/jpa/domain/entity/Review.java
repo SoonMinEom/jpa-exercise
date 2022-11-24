@@ -1,5 +1,6 @@
 package com.exercise.jpa.domain.entity;
 
+import com.exercise.jpa.domain.dto.ReviewRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,4 +26,13 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+    public static ReviewRequest of(Review review) {
+        return ReviewRequest.builder()
+                .id(review.getId())
+                .hospital_id(review.getHospital().getId())
+                .content(review.getContent())
+                .patientName(review.getPatientName())
+                .build();
+    }
 }

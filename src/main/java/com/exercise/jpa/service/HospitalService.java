@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,5 +32,12 @@ public class HospitalService {
                 .map(hospital -> HospitalResponse.of(hospital)).collect(Collectors.toList());
         return hospitalResponses;
     }
+
+    public HospitalResponse getHospital(int id) {
+        Optional<Hospital> optionalHospital = hospitalRepository.findById(id);
+        HospitalResponse hospitalResponse=HospitalResponse.of(optionalHospital.get());
+        return hospitalResponse;
+    }
+
 
 }

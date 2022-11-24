@@ -31,4 +31,19 @@ public class HospitalController {
     public ResponseEntity<ReviewRequest> saveReview(@RequestBody ReviewRequest reviewRequest) {
         return ResponseEntity.ok().body(reviewService.add(reviewRequest));
     }
+
+    @GetMapping("/reviews/{id}")
+    public ResponseEntity<ReviewRequest> getReview(@PathVariable int id) {
+        return ResponseEntity.ok().body(reviewService.get(id));
+    }
+
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<List<ReviewRequest>> getReviews(@PathVariable int id) {
+        return ResponseEntity.ok().body(reviewService.getReviews(id));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HospitalResponse> getHosAndRev(@PathVariable int id) {
+        return null;
+    }
 }

@@ -7,7 +7,9 @@ import com.exercise.jpa.repository.HospitalRepository;
 import com.exercise.jpa.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -35,5 +37,18 @@ public class ReviewService {
                 .content(savedReview.getContent())
                 .build();
 
+    }
+
+    public ReviewRequest get (int id) {
+        Optional<Review> optionalReview = reviewRepository.findById(id);
+        ReviewRequest reviewRequest = Review.of(optionalReview.get());
+        return reviewRequest;
+    }
+
+    public List<ReviewRequest> getReviews(int id) {
+        Optional<Hospital> optionalHospital = hospitalRepository.findById(id);
+        List<ReviewRequest> reviewRequests = optionalHospital.get().getReviews().stream()
+                .map(review -> Review.of(review)).collect(Collectors.toList());
+        return reviewRequests;
     }
 }
